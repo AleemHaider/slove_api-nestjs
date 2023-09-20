@@ -1,0 +1,1202 @@
+{
+	"info": {
+		"_postman_id": "da131dc9-a5de-45d4-a139-cd6f496dad7e",
+		"name": "slove_mobile_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13226320"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Create User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status test\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"",
+									"pm.test(\"Header Test\",()=>{",
+									"    pm.response.to.have.header(\"authorization\")",
+									"})",
+									"pm.test(\"Content-Type is present\", function () {",
+									"    pm.response.to.have.header(\"Content-Type\");",
+									"});",
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.statusCode).to.eql(201);",
+									"    pm.expect(jsonData.message).to.eql(\"Success\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"{{$randomEmail}}\",\n    \"password\":\"1234\",\n    \"type\":\"CUSTOM\",\n    \"token\":\"a\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}auth",
+							"host": [
+								"{{base_url}}auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"sarin_a@gmail.com\",\n    \"password\":\"Test@user1\",\n    \"type\":\"CUSTOM\",\n    \"token\":\"abcd\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}auth/login",
+							"host": [
+								"{{base_url}}auth"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check token status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}auth/token-status",
+							"host": [
+								"{{base_url}}auth"
+							],
+							"path": [
+								"token-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verify email",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"otp\":\"790235\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}auth/verify",
+							"host": [
+								"{{base_url}}auth"
+							],
+							"path": [
+								"verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request password reset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"pasindudixon25+24@gmail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}auth/forgot-password",
+							"host": [
+								"{{base_url}}auth"
+							],
+							"path": [
+								"forgot-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password send otp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"otp\":\"651348\",\n    \"email\":\"fff@mail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}auth/reset-password/otp",
+							"host": [
+								"{{base_url}}auth"
+							],
+							"path": [
+								"reset-password",
+								"otp"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reset Password send password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\":\"1234\",\n    \"email\":\"fff@mail.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}auth/reset-password/password",
+							"host": [
+								"{{base_url}}auth"
+							],
+							"path": [
+								"reset-password",
+								"password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Resend verification email",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}auth/resend-verify",
+							"host": [
+								"{{base_url}}auth"
+							],
+							"path": [
+								"resend-verify"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"oldPassword\":\"Test@user1\",\n    \"newPassword\":\"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}auth/change-password",
+							"host": [
+								"{{base_url}}auth"
+							],
+							"path": [
+								"change-password"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "Add user type to user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\":1\n}   ",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user/user-type",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"user-type"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get current user profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}user/profile",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get current user gallery",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}user/gallery",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"gallery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get  user gallery by id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}user/gallery/22",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"gallery",
+								"22"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get current user recommendations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}user/recommendation?limit=10&page=2",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"recommendation"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One User Details By Id",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}user/98",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"98"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Profile Image",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/home/brian/Documents/500.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}user/profile-image",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"profile-image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User discover",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}user/discover?limit=10",
+							"host": [
+								"{{base_url}}user"
+							],
+							"path": [
+								"discover"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "typeId",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "2",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "test",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user question",
+			"item": [
+				{
+					"name": "add user answers based on step 1",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"step\":1,\n    \"bandName\":\"{{$randomCompanyName}}\",\n    \"city\":\"{{$randomCity}}\",\n    \"country\":\"{{$randomCountry}}\",\n    \"mobilePhone\":\"{{$randomPhoneNumber}}\",\n    \"galleryImages\":[  \"images/user-43/gallery/user-43-wp1921059-tzuyu-wallpapers-1680207848200.jpg\",\n        \"images/user-43/gallery/user-43-wp2466009-javascript-wallpapers-1680207850309.jpg\",\n        \"images/user-43/gallery/user-43-wp9104559-richard-stallman-wallpapers-1680207851402.png\",\n        \"images/user-43/gallery/user-43-wp10514900-richard-stallman-wallpapers-1680207854973.jpg\",\n        \"images/user-43/gallery/user-43-wp10514969-richard-stallman-wallpapers-1680207856373.jpg\",\n        \"images/user-43/gallery/user-43-YVMs1a-1680207857694.jpg\"]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user-question",
+							"host": [
+								"{{base_url}}user-question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user answers",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"countryCode\":\"lk\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user-question",
+							"host": [
+								"{{base_url}}user-question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current User answers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"step\":1,\n    \"bandName\":\"{{$randomCompanyName}}\",\n    \"city\":\"{{$randomCity}}\",\n    \"country\":\"{{$randomCountry}}\",\n    \"mobilePhone\":\"{{$randomPhoneNumber}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user-question/user",
+							"host": [
+								"{{base_url}}user-question"
+							],
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add user answers based on step 2",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"step\": 2,\n    \"profileImage\":\"{{$randomImageUrl}}\",\n    \"activeTime\": 2022,\n    \"gigs\": 11,\n    \"bookingPrice\":400.201,\n    \"artistType\":[1,4],\n    \"genreType\":[5,7],\n    \"venueType\":[4,6],\n    \"firstname\":\"{{$randomFirstName}}\",\n    \"lastname\":\"{{$randomLastName}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user-question",
+							"host": [
+								"{{base_url}}user-question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add user answers based on step 3",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"step\": 3,\n    \"websiteLink\": \"{{$randomUrl}}\",\n    \"socialMediaLink\": \"{{$randomUrl}}\",\n    \"spotify\":\"{{$randomImageUrl}}\",\n    \"facebook\":\"{{$randomUrl}}\",\n    \"instagram\":\"{{$randomUrl}}\",\n    \"youtube\":\"{{$randomUrl}}\",\n    \"additionalLinks\":\"{{$randomUrl}},{{$randomUrl}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}user-question",
+							"host": [
+								"{{base_url}}user-question"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "preference",
+			"item": [
+				{
+					"name": "get artist type list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}preference/artist?search=as",
+							"host": [
+								"{{base_url}}preference"
+							],
+							"path": [
+								"artist"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "as"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get genre type list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}preference/genre?search=k",
+							"host": [
+								"{{base_url}}preference"
+							],
+							"path": [
+								"genre"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "k"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get venue type list",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}preference/venue?search=IN",
+							"host": [
+								"{{base_url}}preference"
+							],
+							"path": [
+								"venue"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "IN"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FIle Upload",
+			"item": [
+				{
+					"name": "Single  FIle Upload",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "type",
+									"value": "PROFILE_IMAGE",
+									"type": "text"
+								},
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/home/brian/Documents/500.png"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}file-upload/single",
+							"host": [
+								"{{base_url}}file-upload"
+							],
+							"path": [
+								"single"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Multiple file upload",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "type",
+									"value": "GALLERY",
+									"type": "text"
+								},
+								{
+									"key": "files",
+									"type": "file",
+									"src": [
+										"/home/brian/Picture/wp1921059-tzuyu-wallpapers.jpg",
+										"/home/brian/Picture/wp2466009-javascript-wallpapers.jpg",
+										"/home/brian/Picture/wp9104559-richard-stallman-wallpapers.png",
+										"/home/brian/Picture/wp10514900-richard-stallman-wallpapers.jpg",
+										"/home/brian/Picture/wp10514969-richard-stallman-wallpapers.jpg",
+										"/home/brian/Picture/YVMs1a.jpg"
+									]
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}file-upload/multiple",
+							"host": [
+								"{{base_url}}file-upload"
+							],
+							"path": [
+								"multiple"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Signed Url",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}file-upload/signed-file?key=images/user-22/profile-image/user-22-500-1679948703259.png",
+							"host": [
+								"{{base_url}}file-upload"
+							],
+							"path": [
+								"signed-file"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "images/user-22/profile-image/user-22-500-1679948703259.png"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "booking",
+			"item": [
+				{
+					"name": "create new  booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\":120,\n    \"genreType\":[1,2,3,45],\n    \"date\":\"2022-10-15\",\n    \"hourRange\":\"10.00.12.00\",\n    \"message\":\"hello\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}booking",
+							"host": [
+								"{{base_url}}booking"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "location",
+			"item": [
+				{
+					"name": "Get All Countries",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}location/country",
+							"host": [
+								"{{base_url}}location"
+							],
+							"path": [
+								"country"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "400",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all city",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}location/city",
+							"host": [
+								"{{base_url}}location"
+							],
+							"path": [
+								"city"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "400",
+									"disabled": true
+								},
+								{
+									"key": "countryId",
+									"value": "15",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "contact",
+			"item": [
+				{
+					"name": "Add new Contact to the user",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\":43\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}contact",
+							"host": [
+								"{{base_url}}contact"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Contact By Contact ids",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    // \"userId\":[22,24],\n        \"id\":[9,10]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}contact/delete",
+							"host": [
+								"{{base_url}}contact"
+							],
+							"path": [
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Current user contacts",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"userId\":22\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}contact/current-user?search=co",
+							"host": [
+								"{{base_url}}contact"
+							],
+							"path": [
+								"current-user"
+							],
+							"query": [
+								{
+									"key": "limit",
+									"value": "20",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "co"
+								},
+								{
+									"key": "userType",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "sort",
+									"value": "desc",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "calender",
+			"item": [
+				{
+					"name": "Add new Event to calender",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"startTime\":\"23:12:12.000\",\n    \"endTime\":\"12:12\",\n    \"date\":\"2023-01-23\",\n    \"description\":\"{{$randomCatchPhraseDescriptor}}\",\n    \"title\":\"{{$randomCommonFileName}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}calendar",
+							"host": [
+								"{{base_url}}calendar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "metadata",
+			"item": [
+				{
+					"name": "Get chat tokens",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "authorization",
+								"value": "Basic f7VnJpyZGUAWfFrB62svsn5WYjbQyedDjuDVEC5W7e4TNoqdPMa3U",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}metadata/chat",
+							"host": [
+								"{{base_url}}metadata"
+							],
+							"path": [
+								"chat"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

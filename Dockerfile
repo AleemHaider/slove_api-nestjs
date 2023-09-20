@@ -1,0 +1,31 @@
+FROM node:lts AS dist
+COPY package*.json ./
+
+RUN npm install
+
+COPY . ./
+
+RUN npm run build
+
+FROM node:lts AS node_modules
+COPY package*.json ./
+
+RUN npm install --prod
+
+FROM node:lts
+
+ARG PORT=3000
+
+RUN mkdir -p /usr/src/app
+
+WORKDIR /usr/src/app
+
+COPY --from=dist dist /usr/src/app/dist
+COPY --from=node_modules node_modules /usr/src/app/node_modules
+
+COPY . /usr/src/app
+
+EXPOSE $PORT
+
+# Start the server using the production build
+CMD [ "node", "dist/main.js" ]
